@@ -21,18 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.eolang.IR;
 
-public class FreeAttribute implements Attribute {
-    private String name;
+/**
+ * DotNotation.
+ * @since 0.1
+ */
+public final class DotNotation extends Expression {
 
-    public FreeAttribute(final String name) {
-        this.name = name;
+    /**
+     * Left part, source.
+     */
+    private final Expression left;
+
+    /**
+     * Attribute that is retrieved from source.
+     */
+    private final Expression right;
+
+    /**
+     * Ctor.
+     * @param left Source.
+     * @param right Attribute.
+     */
+    public DotNotation(final Expression left, final Expression right) {
+        this.left = left;
+        this.right = right;
     }
 
-    @Override
-    public String name() {
-        return name;
+    // @checkstyle LocalFinalVariableNameCheck (30 lines)
+    @Override public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        final String[] rightLines = this.right.toString().split("\n");
+        builder.append(".").append(rightLines[0]);
+        final String[] leftLines = this.left.toString().split("\n");
+        for (final String line: leftLines) {
+            builder.append("\n").append("  ").append(line);
+        }
+        for (int ind = 1; ind < rightLines.length; ++ind) {
+            builder.append("\n").append(rightLines[ind]);
+        }
+        return builder.toString();
     }
 }

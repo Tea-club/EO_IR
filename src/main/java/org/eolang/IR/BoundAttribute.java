@@ -21,25 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.eolang.IR;
 
-import java.util.List;
+/**
+ * BoundAttribute.
+ * @since 0.1
+ */
+public final class BoundAttribute implements Attribute {
 
-public class IR implements Node {
-    final List<BoundAttribute> attrs;
+    /**
+     * Name.
+     */
+    private final String name;
 
-    public IR(List<BoundAttribute> attributes) {
-        this.attrs = attributes;
+    /**
+     * Left.
+     */
+    private final Expression left;
+
+    /**
+     * Ctor.
+     * @param name Name.
+     * @param left Left.
+     */
+    public BoundAttribute(final String name, final Expression left) {
+        this.name = name;
+        this.left = left;
+    }
+
+    @Override
+    public String name() {
+        return this.name;
     }
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        for (final BoundAttribute attr: attrs) {
-            builder.append(attr);
-            builder.append("\n");
+        final String[] lefts = this.left.toString().split("\n");
+        final StringBuilder builder = new StringBuilder();
+        builder.append(lefts[0]).append(" > ").append(this.name).append("\n");
+        if (lefts.length > 1) {
+            for (int ind = 1; ind < lefts.length; ++ind) {
+                builder.append("").append(lefts[ind]).append("\n");
+            }
         }
-        return builder.deleteCharAt(builder.length()-1).toString();
+        return builder.deleteCharAt(builder.length() - 1).toString();
     }
 }

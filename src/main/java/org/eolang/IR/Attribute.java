@@ -21,10 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.eolang.IR;
 
+/**
+ * Attribute.
+ * @since 0.1
+ */
 public interface Attribute extends Node {
 
+    /**
+     * Name.
+     * @return Name.
+     */
     String name();
 }

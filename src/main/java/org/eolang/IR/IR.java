@@ -21,29 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.eolang.IR;
 
-public class DotNotation extends Expression {
-    final Expression left;
-    final Expression right;
+import java.util.List;
 
-    public DotNotation(Expression left, Expression right) {
-        this.left = left;
-        this.right = right;
+/**
+ * IR.
+ * @since 0.1
+ */
+public final class IR implements Node {
+
+    /**
+     * Attrs.
+     */
+    private final List<BoundAttribute> attrs;
+
+    /**
+     * Ctor.
+     * @param attributes Array of objects.
+     */
+    public IR(final List<BoundAttribute> attributes) {
+        this.attrs = attributes;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         final StringBuilder builder = new StringBuilder();
-        final String[] rightLines = right.toString().split("\n");
-        builder.append(".").append(rightLines[0]);
-        final String[] leftLines = left.toString().split("\n");
-        for (final String line: leftLines) {
-            builder.append("\n").append("  ").append(line);
+        for (final BoundAttribute attr: this.attrs) {
+            builder.append(attr);
+            builder.append("\n");
         }
-        for (int i = 1; i < rightLines.length; i++) {
-            builder.append("\n").append(rightLines[i]);
-        }
-        return builder.toString();
+        return builder.deleteCharAt(builder.length() - 1).toString();
     }
 }

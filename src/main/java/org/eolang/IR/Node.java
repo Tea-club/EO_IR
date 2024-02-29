@@ -24,12 +24,10 @@
 
 package org.eolang.IR;
 
-public interface IRBuilder {
-    IRSimpleBuilder with(final String name, final Expression expression);
+/**
+ * Node.
+ * @since 0.1
+ */
+public interface Node {
 
-    IRSimpleBuilder with(final BoundAttribute bound);
-
-    Link getLinkTo(final String name);
-
-    IR build();
 }

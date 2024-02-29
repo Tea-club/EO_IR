@@ -21,33 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.eolang.IR;
 
-public class BoundAttribute implements Attribute {
-    String name;
-    final Expression left;
+/**
+ * Free attribute.
+ * @since 0.1
+ */
+public final class FreeAttribute implements Attribute {
 
-    public BoundAttribute(String name, Expression left) {
+    /**
+     * Name of the attribute.
+     */
+    private final String name;
+
+    /**
+     * Ctor.
+     * @param name Name.
+     */
+    public FreeAttribute(final String name) {
         this.name = name;
-        this.left = left;
     }
 
     @Override
     public String name() {
-        return name;
-    }
-
-    @Override
-    public String toString() {
-        final String[] left = this.left.toString().split("\n");
-        final StringBuilder builder = new StringBuilder();
-        builder.append(left[0]).append(" > ").append(name).append("\n");
-        if (left.length > 1) {
-            for (int i = 1; i < left.length; i++) {
-                builder.append("").append(left[i]).append("\n");
-            }
-        }
-        return builder.deleteCharAt(builder.length()-1).toString();
+        return this.name;
     }
 }

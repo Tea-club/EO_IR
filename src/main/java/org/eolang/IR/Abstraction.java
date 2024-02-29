@@ -21,31 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.eolang.IR;
 
 import java.util.List;
 
-public class Application extends Expression {
+/**
+ * Abstraction.
+ * @since 0.1
+ */
+public final class Abstraction extends Expression {
 
-    Expression source;
-    final List<Expression> args;
+    /**
+     * Frees.
+     */
+    private final List<FreeAttribute> frees;
 
-    public Application(final Expression source, final List<Expression> args) {
-        this.source = source;
-        this.args = args;
+    /**
+     * Bounds.
+     */
+    private final List<BoundAttribute> bounds;
+
+    /**
+     * Ctor.
+     * @param frees Frees.
+     * @param bound Bound.
+     */
+    public Abstraction(final List<FreeAttribute> frees, final List<BoundAttribute> bound) {
+        this.frees = frees;
+        this.bounds = bound;
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(this.source);
-        for (final Expression arg: args) {
-            final String[] lines = arg.toString().split("\n");
-            for (final String line: lines) {
-                builder.append("\n").append("  ").append(line);
+        builder.append("[");
+        this.frees.forEach(att -> builder.append(att.name()).append(" "));
+        builder.append("]");
+        builder.append("\n");
+        this.bounds.forEach(
+            att -> {
+                final String[] lines = att.toString().split("\n");
+                for (final String line : lines) {
+                    builder.append("  ").append(line).append("\n");
+                }
             }
-        }
-        return builder.toString();
+        );
+        return builder.deleteCharAt(builder.length() - 1).toString();
     }
 }
