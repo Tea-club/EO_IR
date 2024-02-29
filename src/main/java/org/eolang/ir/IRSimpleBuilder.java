@@ -21,36 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.IR;
+package org.eolang.ir;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * IR.
+ * Simple Builder of {@link IR}.
  * @since 0.1
+ * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  */
-public final class IR implements Node {
+public final class IRSimpleBuilder implements IRBuilder {
 
     /**
-     * Attrs.
+     * List of bound attributes.
      */
     private final List<BoundAttribute> attrs;
 
     /**
      * Ctor.
-     * @param attributes Array of objects.
      */
-    public IR(final List<BoundAttribute> attributes) {
-        this.attrs = attributes;
+    public IRSimpleBuilder() {
+        this.attrs = new ArrayList<>(0);
     }
 
     @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        for (final BoundAttribute attr: this.attrs) {
-            builder.append(attr);
-            builder.append("\n");
-        }
-        return builder.deleteCharAt(builder.length() - 1).toString();
+    public IRSimpleBuilder with(final String name, final Expression expression) {
+        this.with(new BoundAttribute(name, expression));
+        return this;
+    }
+
+    @Override
+    public IRSimpleBuilder with(final BoundAttribute bound) {
+        this.attrs.add(bound);
+        return this;
+    }
+
+    @Override
+    public Link getLinkTo(final String name) {
+        final Attribute source = this.attrs.stream().filter(
+            attr -> name.equals(attr.name())
+        ).findFirst().orElseThrow(
+            () -> new IllegalArgumentException(
+                String.format("No attribute %s found", name)
+            )
+        );
+        return new Link(source);
+    }
+
+    @Override
+    public IR build() {
+        return new IR(this.attrs);
     }
 }

@@ -21,20 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.IR;
+package org.eolang.ir;
 
 /**
- * Expression.
+ * Attribute.
  * @since 0.1
  */
-public abstract class Expression implements Node {
+public interface Attribute extends Node {
 
     /**
-     * Locator of expression.
-     * @return The String.
-     * @checkstyle NonStaticMethodCheck (15 lines)
+     * Name.
+     * @return Name.
      */
-    private String locator() {
-        return "Not implemented";
-    }
+    String name();
 }

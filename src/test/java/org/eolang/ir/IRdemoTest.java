@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.IR;
+package org.eolang.ir;
 
 import java.util.ArrayList;
 import org.cactoos.list.ListOf;
@@ -32,7 +32,8 @@ import org.junit.jupiter.api.Test;
  * @since 0.1
  * @checkstyle LocalFinalVariableNameCheck (500 lines)
  */
-public class IRdemoTest {
+@SuppressWarnings("PMD.SystemPrintln")
+class IRdemoTest {
 
     @Test
     void buildsSimpleEO() {

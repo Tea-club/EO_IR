@@ -21,29 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.IR;
-
 /**
- * Link to eo object.
- * @since 0.1
+ * IR classes.
  */
-public final class Link extends Expression {
-
-    /**
-     * Object where link to.
-     */
-    private final Attribute source;
-
-    /**
-     * Ctor.
-     * @param source Source.
-     */
-    public Link(final Attribute source) {
-        this.source = source;
-    }
-
-    @Override
-    public String toString() {
-        return this.source.name();
-    }
-}
+package org.eolang.ir;

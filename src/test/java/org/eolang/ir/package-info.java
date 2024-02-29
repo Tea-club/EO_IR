@@ -21,17 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.IR;
-
 /**
- * Attribute.
- * @since 0.1
+ * IR tests.
+ * The package contains different unit tests for all
+ * implementations of {@link org.eolang.ir}.
  */
-public interface Attribute extends Node {
-
-    /**
-     * Name.
-     * @return Name.
-     */
-    String name();
-}
+package org.eolang.ir;

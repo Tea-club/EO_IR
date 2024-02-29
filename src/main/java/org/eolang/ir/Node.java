@@ -21,7 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+package org.eolang.ir;
+
 /**
- * IR classes.
+ * Node.
+ * @since 0.1
  */
-package org.eolang.IR;
+public interface Node {
+}

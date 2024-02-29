@@ -21,41 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package org.eolang.IR;
+package org.eolang.ir;
 
 /**
- * IRBuilder.
+ * DotNotation.
  * @since 0.1
- * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  */
-public interface IRBuilder {
+public final class DotNotation extends Expression {
 
     /**
-     * With.
-     * @param name Name.
-     * @param expression Expression.
-     * @return This IRBuilder.
+     * Left part, source.
      */
-    IRSimpleBuilder with(String name, Expression expression);
+    private final Expression left;
 
     /**
-     * With.
-     * @param bound Bound attribute.
-     * @return This IRBuilder.
+     * Attribute that is retrieved from source.
      */
-    IRSimpleBuilder with(BoundAttribute bound);
+    private final Expression right;
 
     /**
-     * Provides link to object by its name.
-     * @param name Name.
-     * @return Link.
+     * Ctor.
+     * @param left Source.
+     * @param right Attribute.
      */
-    Link getLinkTo(String name);
+    public DotNotation(final Expression left, final Expression right) {
+        this.left = left;
+        this.right = right;
+    }
 
-    /**
-     * Return {@link IR}.
-     * @return IR.
-     */
-    IR build();
+    // @checkstyle LocalFinalVariableNameCheck (30 lines)
+    @Override
+    @SuppressWarnings({"PMD.AppendCharacterWithChar", "PMD.ConsecutiveLiteralAppends"})
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        final String[] rightLines = this.right.toString().split("\n");
+        builder.append(".").append(rightLines[0]);
+        final String[] leftLines = this.left.toString().split("\n");
+        for (final String line: leftLines) {
+            builder.append("\n").append("  ").append(line);
+        }
+        for (int ind = 1; ind < rightLines.length; ++ind) {
+            builder.append("\n").append(rightLines[ind]);
+        }
+        return builder.toString();
+    }
 }

@@ -21,29 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.IR;
+package org.eolang.ir;
 
 /**
- * Free attribute.
+ * Link to eo object.
  * @since 0.1
  */
-public final class FreeAttribute implements Attribute {
+public final class Link extends Expression {
 
     /**
-     * Name of the attribute.
+     * Object where link to.
      */
-    private final String name;
+    private final Attribute source;
 
     /**
      * Ctor.
-     * @param name Name.
+     * @param source Source.
      */
-    public FreeAttribute(final String name) {
-        this.name = name;
+    public Link(final Attribute source) {
+        this.source = source;
     }
 
     @Override
-    public String name() {
-        return this.name;
+    @SuppressWarnings("PMD.AppendCharacterWithChar")
+    public String toString() {
+        return this.source.name();
     }
 }

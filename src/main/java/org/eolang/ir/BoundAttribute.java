@@ -21,46 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.IR;
-
-import java.util.List;
+package org.eolang.ir;
 
 /**
- * Application.
+ * BoundAttribute.
  * @since 0.1
  */
-public final class Application extends Expression {
+public final class BoundAttribute implements Attribute {
 
     /**
-     * Source.
+     * Name.
      */
-    private final Expression source;
+    @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
+    private final String name;
 
     /**
-     * Arguments of application.
+     * Left.
      */
-    private final List<Expression> args;
+    private final Expression left;
 
     /**
      * Ctor.
-     * @param source Source.
-     * @param args Args.
+     * @param name Name.
+     * @param left Left.
      */
-    public Application(final Expression source, final List<Expression> args) {
-        this.source = source;
-        this.args = args;
+    public BoundAttribute(final String name, final Expression left) {
+        this.name = name;
+        this.left = left;
     }
 
     @Override
+    public String name() {
+        return this.name;
+    }
+
+    @Override
+    @SuppressWarnings("PMD.AppendCharacterWithChar")
     public String toString() {
+        final String[] lefts = this.left.toString().split("\n");
         final StringBuilder builder = new StringBuilder();
-        builder.append(this.source);
-        for (final Expression arg: this.args) {
-            final String[] lines = arg.toString().split("\n");
-            for (final String line: lines) {
-                builder.append("\n").append("  ").append(line);
+        builder.append(lefts[0]).append(" > ").append(this.name).append("\n");
+        if (lefts.length > 1) {
+            for (int ind = 1; ind < lefts.length; ++ind) {
+                builder.append("").append(lefts[ind]).append("\n");
             }
         }
-        return builder.toString();
+        return builder.deleteCharAt(builder.length() - 1).toString();
     }
 }

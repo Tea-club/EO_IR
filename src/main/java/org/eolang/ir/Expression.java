@@ -21,56 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.IR;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.eolang.ir;
 
 /**
- * Simple Builder of {@link IR}.
+ * Expression.
  * @since 0.1
- * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  */
-public final class IRSimpleBuilder implements IRBuilder {
+public abstract class Expression implements Node {
 
     /**
-     * List of bound attributes.
+     * Locator of expression.
+     * @return The String.
+     * @checkstyle NonStaticMethodCheck (15 lines)
      */
-    private final List<BoundAttribute> attrs;
-
-    /**
-     * Ctor.
-     */
-    public IRSimpleBuilder() {
-        this.attrs = new ArrayList<>(0);
-    }
-
-    @Override
-    public IRSimpleBuilder with(final String name, final Expression expression) {
-        this.with(new BoundAttribute(name, expression));
-        return this;
-    }
-
-    @Override
-    public IRSimpleBuilder with(final BoundAttribute bound) {
-        this.attrs.add(bound);
-        return this;
-    }
-
-    @Override
-    public Link getLinkTo(final String name) {
-        final Attribute source = this.attrs.stream().filter(
-            attr -> name.equals(attr.name())
-        ).findFirst().orElseThrow(
-            () -> new IllegalArgumentException(
-                String.format("No attribute %s found", name)
-            )
-        );
-        return new Link(source);
-    }
-
-    @Override
-    public IR build() {
-        return new IR(this.attrs);
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    private String locator() {
+        return "Not implemented";
     }
 }

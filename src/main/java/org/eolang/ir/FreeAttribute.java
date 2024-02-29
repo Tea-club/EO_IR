@@ -21,51 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.IR;
-
-import java.util.List;
+package org.eolang.ir;
 
 /**
- * Abstraction.
+ * Free attribute.
  * @since 0.1
  */
-public final class Abstraction extends Expression {
+public final class FreeAttribute implements Attribute {
 
     /**
-     * Frees.
+     * Name of the attribute.
      */
-    private final List<FreeAttribute> frees;
-
-    /**
-     * Bounds.
-     */
-    private final List<BoundAttribute> bounds;
+    @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
+    private final String name;
 
     /**
      * Ctor.
-     * @param frees Frees.
-     * @param bound Bound.
+     * @param name Name.
      */
-    public Abstraction(final List<FreeAttribute> frees, final List<BoundAttribute> bound) {
-        this.frees = frees;
-        this.bounds = bound;
+    public FreeAttribute(final String name) {
+        this.name = name;
     }
 
     @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("[");
-        this.frees.forEach(att -> builder.append(att.name()).append(" "));
-        builder.append("]");
-        builder.append("\n");
-        this.bounds.forEach(
-            att -> {
-                final String[] lines = att.toString().split("\n");
-                for (final String line : lines) {
-                    builder.append("  ").append(line).append("\n");
-                }
-            }
-        );
-        return builder.deleteCharAt(builder.length() - 1).toString();
+    @SuppressWarnings("PMD.AppendCharacterWithChar")
+    public String name() {
+        return this.name;
     }
 }
