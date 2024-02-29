@@ -22,9 +22,11 @@
  * SOFTWARE.
  */
 
-package org.eolang.IR;
+package org.eolang.ir;
 
-public interface Attribute extends Node {
-
-    String name();
+/**
+ * Node.
+ * @since 0.1
+ */
+public interface Node {
 }

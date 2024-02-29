@@ -21,15 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.eolang.ir;
 
-package org.eolang.IR;
+/**
+ * Attribute.
+ * @since 0.1
+ */
+public interface Attribute extends Node {
 
-public interface IRBuilder {
-    IRSimpleBuilder with(final String name, final Expression expression);
-
-    IRSimpleBuilder with(final BoundAttribute bound);
-
-    Link getLinkTo(final String name);
-
-    IR build();
+    /**
+     * Name.
+     * @return Name.
+     */
+    String name();
 }

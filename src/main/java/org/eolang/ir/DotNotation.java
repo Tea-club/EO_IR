@@ -21,33 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.eolang.ir;
 
-package org.eolang.IR;
+/**
+ * DotNotation.
+ * @since 0.1
+ */
+public final class DotNotation extends Expression {
 
-public class BoundAttribute implements Attribute {
-    String name;
-    final Expression left;
+    /**
+     * Left part, source.
+     */
+    private final Expression left;
 
-    public BoundAttribute(String name, Expression left) {
-        this.name = name;
+    /**
+     * Attribute that is retrieved from source.
+     */
+    private final Expression right;
+
+    /**
+     * Ctor.
+     * @param left Source.
+     * @param right Attribute.
+     */
+    public DotNotation(final Expression left, final Expression right) {
         this.left = left;
+        this.right = right;
     }
 
+    // @checkstyle LocalFinalVariableNameCheck (30 lines)
     @Override
-    public String name() {
-        return name;
-    }
-
-    @Override
+    @SuppressWarnings({"PMD.AppendCharacterWithChar", "PMD.ConsecutiveLiteralAppends"})
     public String toString() {
-        final String[] left = this.left.toString().split("\n");
         final StringBuilder builder = new StringBuilder();
-        builder.append(left[0]).append(" > ").append(name).append("\n");
-        if (left.length > 1) {
-            for (int i = 1; i < left.length; i++) {
-                builder.append("").append(left[i]).append("\n");
-            }
+        final String[] rightLines = this.right.toString().split("\n");
+        builder.append(".").append(rightLines[0]);
+        final String[] leftLines = this.left.toString().split("\n");
+        for (final String line: leftLines) {
+            builder.append("\n").append("  ").append(line);
         }
-        return builder.deleteCharAt(builder.length()-1).toString();
+        for (int ind = 1; ind < rightLines.length; ++ind) {
+            builder.append("\n").append(rightLines[ind]);
+        }
+        return builder.toString();
     }
 }

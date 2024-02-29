@@ -21,12 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.eolang.ir;
 
-package org.eolang.IR;
+import java.util.List;
 
-public abstract class Expression implements Node {
+/**
+ * IR.
+ * @since 0.1
+ */
+public final class IR implements Node {
 
-    private String locator() {
-        return "Not implemented";
+    /**
+     * Attrs.
+     */
+    private final List<BoundAttribute> attrs;
+
+    /**
+     * Ctor.
+     * @param attributes Array of objects.
+     */
+    public IR(final List<BoundAttribute> attributes) {
+        this.attrs = attributes;
+    }
+
+    @Override
+    @SuppressWarnings("PMD.AppendCharacterWithChar")
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        for (final BoundAttribute attr: this.attrs) {
+            builder.append(attr);
+            builder.append("\n");
+        }
+        return builder.deleteCharAt(builder.length() - 1).toString();
     }
 }

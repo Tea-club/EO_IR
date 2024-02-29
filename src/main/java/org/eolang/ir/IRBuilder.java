@@ -22,17 +22,40 @@
  * SOFTWARE.
  */
 
-package org.eolang.IR;
+package org.eolang.ir;
 
-public class FreeAttribute implements Attribute {
-    private String name;
+/**
+ * IRBuilder.
+ * @since 0.1
+ * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
+ */
+public interface IRBuilder {
 
-    public FreeAttribute(final String name) {
-        this.name = name;
-    }
+    /**
+     * With.
+     * @param name Name.
+     * @param expression Expression.
+     * @return This IRBuilder.
+     */
+    IRSimpleBuilder with(String name, Expression expression);
 
-    @Override
-    public String name() {
-        return name;
-    }
+    /**
+     * With.
+     * @param bound Bound attribute.
+     * @return This IRBuilder.
+     */
+    IRSimpleBuilder with(BoundAttribute bound);
+
+    /**
+     * Provides link to object by its name.
+     * @param name Name.
+     * @return Link.
+     */
+    Link getLinkTo(String name);
+
+    /**
+     * Return {@link IR}.
+     * @return IR.
+     */
+    IR build();
 }

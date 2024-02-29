@@ -21,7 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.eolang.ir;
 
-package org.eolang.IR;
+/**
+ * Expression.
+ * @since 0.1
+ */
+public abstract class Expression implements Node {
 
-public interface Node {}
+    /**
+     * Locator of expression.
+     * @return The String.
+     * @checkstyle NonStaticMethodCheck (15 lines)
+     */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    private String locator() {
+        return "Not implemented";
+    }
+}

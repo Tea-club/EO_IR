@@ -21,25 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package org.eolang.IR;
+package org.eolang.ir;
 
 import java.util.List;
 
-public class IR implements Node {
-    final List<BoundAttribute> attrs;
+/**
+ * Application.
+ * @since 0.1
+ */
+public final class Application extends Expression {
 
-    public IR(List<BoundAttribute> attributes) {
-        this.attrs = attributes;
+    /**
+     * Source.
+     */
+    private final Expression source;
+
+    /**
+     * Arguments of application.
+     */
+    private final List<Expression> args;
+
+    /**
+     * Ctor.
+     * @param source Source.
+     * @param args Args.
+     */
+    public Application(final Expression source, final List<Expression> args) {
+        this.source = source;
+        this.args = args;
     }
 
     @Override
+    @SuppressWarnings({"PMD.AppendCharacterWithChar", "PMD.ConsecutiveLiteralAppends"})
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        for (final BoundAttribute attr: attrs) {
-            builder.append(attr);
-            builder.append("\n");
+        final StringBuilder builder = new StringBuilder();
+        builder.append(this.source);
+        for (final Expression arg: this.args) {
+            final String[] lines = arg.toString().split("\n");
+            for (final String line: lines) {
+                builder.append("\n").append("  ").append(line);
+            }
         }
-        return builder.deleteCharAt(builder.length()-1).toString();
+        return builder.toString();
     }
 }

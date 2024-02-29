@@ -21,29 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.eolang.ir;
 
-package org.eolang.IR;
+/**
+ * Link to eo object.
+ * @since 0.1
+ */
+public final class Link extends Expression {
 
-public class DotNotation extends Expression {
-    final Expression left;
-    final Expression right;
+    /**
+     * Object where link to.
+     */
+    private final Attribute source;
 
-    public DotNotation(Expression left, Expression right) {
-        this.left = left;
-        this.right = right;
+    /**
+     * Ctor.
+     * @param source Source.
+     */
+    public Link(final Attribute source) {
+        this.source = source;
     }
 
-    @Override public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        final String[] rightLines = right.toString().split("\n");
-        builder.append(".").append(rightLines[0]);
-        final String[] leftLines = left.toString().split("\n");
-        for (final String line: leftLines) {
-            builder.append("\n").append("  ").append(line);
-        }
-        for (int i = 1; i < rightLines.length; i++) {
-            builder.append("\n").append(rightLines[i]);
-        }
-        return builder.toString();
+    @Override
+    @SuppressWarnings("PMD.AppendCharacterWithChar")
+    public String toString() {
+        return this.source.name();
     }
 }

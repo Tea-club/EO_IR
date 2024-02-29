@@ -21,35 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.eolang.ir;
 
-package org.eolang.IR;
-
+import java.util.ArrayList;
 import java.util.List;
 
-public class Abstraction extends Expression {
+/**
+ * Simple Builder of {@link IR}.
+ * @since 0.1
+ * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
+ */
+public final class IRSimpleBuilder implements IRBuilder {
 
-    final List<FreeAttribute> frees;
+    /**
+     * List of bound attributes.
+     */
+    private final List<BoundAttribute> attrs;
 
-    final List<BoundAttribute> bounds;
-
-    public Abstraction(List<FreeAttribute> frees, List<BoundAttribute> bound) {
-        this.frees = frees;
-        this.bounds = bound;
+    /**
+     * Ctor.
+     */
+    public IRSimpleBuilder() {
+        this.attrs = new ArrayList<>(0);
     }
 
     @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("[");
-        frees.forEach(att -> builder.append(att.name()).append(" "));
-        builder.append("]");
-        builder.append("\n");
-        bounds.forEach(att -> {
-            final String[] lines = att.toString().split("\n");
-            for (final String line : lines) {
-                builder.append("  ").append(line).append("\n");
-            }
-        });
-        return builder.deleteCharAt(builder.length()-1).toString();
+    public IRSimpleBuilder with(final String name, final Expression expression) {
+        this.with(new BoundAttribute(name, expression));
+        return this;
+    }
+
+    @Override
+    public IRSimpleBuilder with(final BoundAttribute bound) {
+        this.attrs.add(bound);
+        return this;
+    }
+
+    @Override
+    public Link getLinkTo(final String name) {
+        final Attribute source = this.attrs.stream().filter(
+            attr -> name.equals(attr.name())
+        ).findFirst().orElseThrow(
+            () -> new IllegalArgumentException(
+                String.format("No attribute %s found", name)
+            )
+        );
+        return new Link(source);
+    }
+
+    @Override
+    public IR build() {
+        return new IR(this.attrs);
     }
 }
